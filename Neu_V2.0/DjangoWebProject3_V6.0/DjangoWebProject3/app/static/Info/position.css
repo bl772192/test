@@ -1,0 +1,11 @@
+﻿
+#span13 {
+    position:absolute;
+    top:100px;
+    left:500px;
+}
+
+p:active, h1:active, a:active {
+    background-color: green;
+    background-color: red;
+}

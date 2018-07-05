@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        
+        {% block head %}
+            <title>Base</title>
+        {% endblock %}
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+        <form id="logoutForm" action="/logout" method="post">
+        {% csrf_token %}
+            <div class="container">
+              <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">IAS Cloud</a>
+                  </div>
+                  <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                      <li><a href="http://localhost:8000/">Startseite</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Information<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="http://localhost:8000/regelung/">Übersicht</a></li>
+                          <li><a href="http://localhost:8000/monitoring/">Testläufe</a></li>
+                          <li><a href="http://localhost:8000/about/">Videos</a></li>
+                        </ul>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Assistenzfunktionen<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="http://localhost:8000/regelung/">Adaptive Steuerung</a></li>
+                          <li><a href="http://localhost:8000/monitoring/">Monitoring</a></li>
+                          <li><a href="http://localhost:8000/olap/">Rückverfolgung</a></li>
+                        </ul>
+                      </li>
+                      <li><a href="http://localhost:8000/contact/">Kontakt</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                      <!--<li><span class="navbar-brand">Hallo Herr/Frau {{ user.username }}!</span></li>-->
+                      <li><a>Hallo Herr/Frau {{ user.username }}!</a></li>
+                      <li><a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a></li>
+                    </ul>                   
+                  </div>
+                </div>
+              </nav>
+            </div>
+            </form>
+        <!--{% else %}
+            <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://localhost:8000/login/"></a></li>
+            <li><a href="{% url 'login' %}">Anmelden</a></li>
+            </ul>
+        {% endif %}-->
+        {% block body %}
+            <h1>Base</h1>
+        {% endblock %}
+    </body>
+</html>

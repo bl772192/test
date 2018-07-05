@@ -1,0 +1,43 @@
+﻿{% extends 'base.html' %}
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'images/Ablauf.mp4' %}">
+
+    <title></title>
+</head>
+<body>
+    {% block body %}
+
+        <div class="container">
+            <!--<div style="overflow-x:auto;">
+            <div class="embed-responsive embed-responsive-16by9">-->
+                <video class="img-responsive" width="320" height="240" controls>
+                    <!--<source src="images/Ablauf.mp4" type="video/mp4"><source/>-->
+                    <source src="{% static 'images/Ablauf.mp4' type='video/mp4' %}">
+                </video>
+
+                <h2>{{ title }}.</h2>
+                <h3>{{ message }}</h3>
+
+                <p>Use this area to provide additional information.</p>
+            <!--</div>-->
+
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
+                    <footer>
+                        <p>&copy; Copyright 2018 Benjamin Lindemann - Institut für Automatisierungstechnik und Softwaresysteme, Universität Stuttgart</p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}
+</body>
+</html>

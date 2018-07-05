@@ -1,0 +1,700 @@
+﻿{% extends 'base.html' %}
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+    {% load static %}
+    <link rel="stylesheet"
+    href="{% static 'Info/position.css' %}">
+
+    {% load static %}
+    <script src="{% static 'app/scripts/Uebernahme.js' %}"></script>
+
+    <title></title>
+</head>
+<body>
+    {% block body %}
+    <div class="container">
+        <!--<span style="position:absolute;top:100px;left:200px">
+                <button class="btn btn-default">Übernahme</button>
+        </span>-->
+        <div class="jumbotron" style="background-color:rgba(0, 255, 224, 0.22)">
+            <div style="overflow-x:auto;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Funktionen</th>
+                            <th class="text-center">Vorwahl Presse</th>
+                            <th class="text-center">Aktuelle Stellwerte</th>
+                            <th class="text-center">Vorgabe Cloud</th>
+                            <th class="text-center">Wert übernehmen</th>
+                        </tr>
+                    </thead>
+                    <tbody>        
+                        <tr>
+                            <th scope="row" align="center"><small style="width:120px">Geschwindigkeit</small><h5>Min-Max: 1-2</h5></th>
+                            <td align="center"><input style="width:120px; text-align:center" type="text" class="form-control" placeholder="Geschw." id="vorwah_1" onkeyup="vorwahl_1()"></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="aktuell_1"></span></button></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="anzeige_1"></span></button></td>
+                            <td align="center"><button style="width:120px" id="uebernahm_1" class="btn btn-default" onclick="uebernahme_1()">Übernahme</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" align="center"><small style="width:120px">Presskraft</small><h5>Min-Max: 1-2</h5></th>
+                            <td align="center"><input style="width:120px; text-align:center" type="text" class="form-control" placeholder="Presskraft" id="vorwah_2" onkeyup="vorwahl_2()"></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="aktuell_2"></span></button></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="anzeige_2"></span></button></td>
+                            <td align="center"><button style="width:120px" id="uebernahm_2" class="btn btn-default" onclick="uebernahme_2()">Übernahme</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" align="center"><small style="width:120px">Einbauraum</small><h5>Min-Max: 1-2</h5></th>
+                            <td align="center"><input style="width:120px; text-align:center" type="text" class="form-control" placeholder="Verstellung" id="vorwah_3" onkeyup="vorwahl_3()"></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="aktuell_3"></span></button></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="anzeige_3"></span></button></td>
+                            <td align="center"><button style="width:120px" id="uebernahm_3" class="btn btn-default" onclick="uebernahme_3()">Übernahme</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" align="center"><small style="width:120px">Sprühen1Unten</small><h5>Min-Max: 1-2</h5></th>
+                            <td align="center"><input style="width:120px; text-align:center" type="text" class="form-control" placeholder="Spr1Unten" id="vorwah_4" onkeyup="vorwahl_4()"></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="aktuell_4"></span></button></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="anzeige_4"></span></button></td>
+                            <td align="center"><button style="width:120px" id="uebernahm_4" class="btn btn-default" onclick="uebernahme_4()">Übernahme</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" align="center"><small style="width:120px">Sprühen1Oben</small><h5>Min-Max: 1-2</h5></th>
+                            <td align="center"><input style="width:120px; text-align:center" type="text" class="form-control" placeholder="Spr1Oben" id="vorwah_5" onkeyup="vorwahl_5()"></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="aktuell_5"></span></button></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="anzeige_5"></span></button></td>
+                            <td align="center"><button style="width:120px" id="uebernahm_5" class="btn btn-default" onclick="uebernahme_5()">Übernahme</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" align="center"><small style="width:120px">Sprühen2Unten</small><h5>Min-Max: 1-2</h5></th>
+                            <td align="center"><input style="width:120px; text-align:center" type="text" class="form-control" placeholder="Spr2Unten" id="vorwah_6" onkeyup="vorwahl_6()"></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="aktuell_6"></span></button></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="anzeige_6"></span></button></td>
+                            <td align="center"><button style="width:120px" id="uebernahm_6" class="btn btn-default" onclick="uebernahme_6()">Übernahme</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" align="center"><small style="width:120px">Sprühen2Oben</small><h5>Min-Max: 1-2</h5></th>
+                            <td align="center"><input style="width:120px; text-align:center" type="text" class="form-control" placeholder="Spr2Oben" id="vorwah_7" onkeyup="vorwahl_7()"></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="aktuell_7"></span></button></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="anzeige_7"></span></button></td>
+                            <td align="center"><button style="width:120px" id="uebernahm_7" class="btn btn-default" onclick="uebernahme_7()">Übernahme</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" align="center"><small style="width:120px">Ofen-Temperatur</small><h5>Min-Max: 1-2</h5></th>
+                            <td align="center"><input style="width:120px; text-align:center" type="text" class="form-control" placeholder="Temperatur" id="vorwah_8" onkeyup="vorwahl_8()"></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="aktuell_8"></span></button></td>
+                            <td align="center"><button style="height:34px;width:120px" class="btn btn-default"><span id="anzeige_8"></span></button></td>
+                            <td align="center"><button style="width:120px" id="uebernahm_8" class="btn btn-default" onclick="uebernahme_8()">Übernahme</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">      
+                <div class="col-md-3" align="center">
+                    <button style="height:50px;width:230px" id="regler" class="btn btn-default" onclick="Get()">Verbinde mit Regler</button>
+                </div>
+                <div class="col-md-3" align="center">
+                    <button style="height:50px;width:230px" id="bestaetigen" class="btn btn-default" onclick="Bestaetigen()">Auswahl bestätigen</button>
+                </div>    
+                <div class="col-md-3" align="center">
+                    <button style="height:50px;width:230px" id="einmalig" class="btn btn-default" onclick="EinmaligeUebernahme()">Alle Werte einmalig übernehmen</button>
+                </div> 
+                <div class="col-md-3" align="center">
+                    <button style="height:50px;width:230px" id="automatic" class="btn btn-default" onclick="Automatic()">Vollautomatischer Regelkreis</button>
+                </div>    
+            </div> 
+
+            <!--<input type="hidden" id="input" name="variable" value="{{ Stellwerte }}">-->
+            <button style="height:34px;width:120px" class="btn btn-default"><span id="test"></span></button>
+
+
+            <!--<form>
+                <h4 style="position:relative;width:100px;top:100px;left:320px">Geschwindigkeit</h4>
+                <h4>Presskraft</h4>
+                <h4>Einbauraum</h4>
+                <h4>Sprühen1Unten</h4>
+                <h4>Sprühen1Oben</h4>
+                <h4>Sprühen2Unten</h4>
+                <h4>Sprühen2Oben</h4>
+                <h4>Ofen-Temperatur</h4>
+            </form>
+
+
+            <form>
+                <input style="position:absolute;width:100px;top:200px;left:320px" type="text" class="form-control" placeholder="Geschwindigkeit" id="vorwah_1" onkeyup="vorwahl_1()">
+                <input style="position:absolute;width:100px;top:250px;left:320px" type="text" class="form-control" placeholder="Presskraft" id="vorwah_2" onkeyup="vorwahl_2()">
+                <input style="position:absolute;width:100px;top:250px;left:350px" type="text" class="form-control" placeholder="Verstellung" id="vorwah_3" onkeyup="vorwahl_3()">
+                <input style="position:absolute;width:100px;top:250px;left:350px" type="text" class="form-control" placeholder="Spruehen1Unten" id="vorwah_4" onkeyup="vorwahl_4()">
+                <input style="position:absolute;width:100px;top:250px;left:350px" type="text" class="form-control" placeholder="Spruehen1Oben" id="vorwah_5" onkeyup="vorwahl_5()">
+                <input style="position:absolute;width:100px;top:250px;left:350px" type="text" class="form-control" placeholder="Spruehen2Unten" id="vorwah_6" onkeyup="vorwahl_6()">
+                <input style="position:absolute;width:100px;top:250px;left:350px" type="text" class="form-control" placeholder="Spruehen2Oben" id="vorwah_7" onkeyup="vorwahl_7()">
+                <input style="position:absolute;width:100px;top:250px;left:350px" type="text" class="form-control" placeholder="TemperaturOfen" id="vorwah_8" onkeyup="vorwahl_8()">
+            </form>
+            <!--<form>
+                <div class="form-group row">
+                    <div class="col-xs-2">
+                        <input type="text" class="form-control" placeholder="Verstellung" id="vorwah_3" onkeyup="vorwahl_3()">
+                    </div>
+                </div>
+            </form>
+
+            <button style="position:absolute;height:34px;width:100px;top:100px;left:80px" class="btn btn-default"><span id="aktuell_1"></span></button>
+            <button class="btn btn-default"><span id="aktuell_2"></span></button>
+            <button class="btn btn-default"><span id="aktuell_3"></span></button>
+            <button class="btn btn-default"><span id="aktuell_4"></span></button>
+            <button class="btn btn-default"><span id="aktuell_5"></span></button>
+            <button class="btn btn-default"><span id="aktuell_6"></span></button>
+            <button class="btn btn-default"><span id="aktuell_7"></span></button>
+            <button class="btn btn-default"><span id="aktuell_8"></span></button>
+
+            <button style="position:absolute;width:100px;top:100px;left:30px" class="btn btn-default"><span id="anzeige_1"></span></button>
+            <button class="btn btn-default"><span id="anzeige_2"></span></button>
+            <button class="btn btn-default"><span id="anzeige_3"></span></button>
+            <button class="btn btn-default"><span id="anzeige_4"></span></button>
+            <button class="btn btn-default"><span id="anzeige_5"></span></button>
+            <button class="btn btn-default"><span id="anzeige_6"></span></button>
+            <button class="btn btn-default"><span id="anzeige_7"></span></button>
+            <button class="btn btn-default"><span id="anzeige_8"></span></button>
+                    
+            <button style="width:120px" id="uebernahm_1" class="btn btn-default" onclick="uebernahme_1()">Übernahme</button>
+            <button id="uebernahm_2" class="btn btn-default" onclick="uebernahme_2()">Übernahme</button>
+            <button id="uebernahm_3" class="btn btn-default" onclick="uebernahme_3()">Übernahme</button>
+            <button id="uebernahm_4" class="btn btn-default" onclick="uebernahme_4()">Übernahme</button>
+            <button id="uebernahm_5" class="btn btn-default" onclick="uebernahme_5()">Übernahme</button>
+            <button id="uebernahm_6" class="btn btn-default" onclick="uebernahme_6()">Übernahme</button>
+            <button id="uebernahm_7" class="btn btn-default" onclick="uebernahme_7()">Übernahme</button>
+            <button id="uebernahm_8" class="btn btn-default" onclick="uebernahme_8()">Übernahme</button>-->
+
+            <!--<p>test:<output id="aktuell2"></output><span id="aktuell1"></span></p>-->
+            <!--<button class="btn btn-default"><span id="vorgabe_1" value="123456"></span></button>-->
+        </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
+                    <footer>
+                        <p>&copy; Copyright 2018 Benjamin Lindemann - Institut für Automatisierungstechnik und Softwaresysteme, Universität Stuttgart</p>
+                    </footer>
+                </div>
+            </div>
+    </div>
+
+
+    <script> // src="" type="text/javascript">
+        var Geschwindigkeit1 = 0.0;
+        var Presskraft1 = 0.0;
+        var Einbauraumverstellung1 = 0.0;
+        var Spruehen1Unten1 = 0.0;
+        var Spruehen1Oben1 = 0.0;
+        var Spruehen2Unten1 = 0.0;
+        var Spruehen2Oben1 = 0.0;
+        var TemperaturOfen1 = 0.0;
+        var Geschwindigkeit2
+        var Presskraft2
+        var Einbauraumverstellung2
+        var Spruehen1Unten2
+        var Spruehen1Oben2
+        var Spruehen2Unten2
+        var Spruehen2Oben2
+        var TemperaturOfen2
+        var Cloud_Values = [1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000];
+        var Empty=1;
+        var Counter=0;
+        var ValuesArrived=0;
+        var AutomaticControl=0;
+        var ReglerConnect=0;
+        var variable = 0;
+        var variable2 = 0;
+
+
+        // Input: Update Webseite
+        /*var input = document.getElementById("input").value;
+        var prepared = input.substring(1, input.length-1);
+        var Stellwerte = prepared.split(/,/);
+        document.getElementById("anzeige_1").innerHTML = Stellwerte[1];
+        Simulink();
+
+        function Simulink() {
+            Geschwindigkeit2 = Stellwerte[0];
+            Presskraft2 = Stellwerte[1];
+            Einbauraumverstellung2 = Stellwerte[2];
+            Spruehen1Unten2 = Stellwerte[3];
+            Spruehen1Oben2 = Stellwerte[4];
+            Spruehen2Unten2 = Stellwerte[5];
+            Spruehen2Oben2 = Stellwerte[6];
+            TemperaturOfen2 = Stellwerte[7];
+            Update_CloudVorgabe();
+            if (variable == 1) {
+                Alle_Werte();
+                //TCP_IP(Cloud_Values); 
+            }
+        }*/
+
+        function test1() {
+            document.getElementById("test").innerHTML = data1;
+        }
+
+        // Input: Verbinde Regler
+        var len = 0;
+        var len_ctrl = 0;
+        var data1
+        var test2
+        function Zeit() {
+            $.getJSON('/input/', function (result) {
+                /*$.each(result, function (i, field) {
+                    len=len+1; 
+                });*/
+                len = result.length;
+                if (len_ctrl < len) {
+                    len_ctrl = len;
+                    Geschwindigkeit2 = result[len - 1].Value1; //JSON.stringify()
+                    Presskraft2 = result[len - 1].Value2;
+                    Einbauraumverstellung2 = result[len - 1].Value3;
+                    Spruehen1Unten2 = result[len - 1].Value4;
+                    Spruehen1Oben2 = result[len - 1].Value5;
+                    Spruehen2Unten2 = result[len - 1].Value6;
+                    Spruehen2Oben2 = result[len - 1].Value7;
+                    TemperaturOfen2 = result[len - 1].Value8;
+                    Update_CloudVorgabe();
+                    if (variable == 1) {
+                        Alle_Werte();
+                        test2 = result[len - 1];
+                        delete test2.id
+                        data1 = JSON.stringify(test2);//JSON.stringify(result[len - 1]);
+                        //test1();
+                        /*$.ajax({
+                            type: "POST",
+                            url: '/output/',
+                            async: true,
+                            data: { data: data1 },
+                            success: function (response) {
+                                alert("ok");
+                            }
+                        });*/
+                        var socket = new WebSocket('ws://localhost:9876/');
+                        socket.onopen = function () {
+                            socket.send(data1);
+                        };
+                        //array = Object.keys(data1).map(function (k) {
+                        //    return object[k];
+                        //});
+                        test1();
+                        //$.post('/output/', function (array) { });
+                    }
+                }
+            });
+        }
+
+        var k = 0;
+        function loop() {
+            if (variable2 == 1) {
+                setTimeout(function () {
+                    Zeit();
+                    k++
+                    if (k < 100) {
+                        loop();
+                    }
+                }, 10000)
+            }
+        }
+
+        function Get() {
+            ReglerConnect = ReglerConnect + 1;
+            if (ReglerConnect & 1) {
+                document.getElementById("regler").style.backgroundColor = "lime";
+                variable2 = 1;
+                loop();
+            } else {
+                document.getElementById("regler").style.backgroundColor = "white";
+                variable2 = 0;
+            }
+        }
+
+
+        //Haupt-Funktionen
+        function Bestaetigen() {
+            if (Empty==1) {
+                for (i = 0; i < 9; i++) {
+                    if (Cloud_Values[i] == 1000000) {
+                        Counter = Counter + 1;
+                    }
+                }
+                if (Counter>=1) {
+                    Counter=0;
+                } else {
+                    Empty=0;
+                    //TCP_IP(Cloud_Values);
+                    Update_VorwahlPresse();
+                }
+            } else {
+                //TCP_IP(Cloud_Values);
+                Update_VorwahlPresse();
+            }
+        }
+
+        function EinmaligeUebernahme() {
+            Alle_Werte();
+            //TCP_IP(Cloud_Values); 
+            Update_VorwahlPresse();
+        }
+
+        function Automatic() {
+            AutomaticControl = AutomaticControl + 1;
+            if (AutomaticControl & 1) {
+                variable=1;
+                document.getElementById("automatic").style.backgroundColor = "lime";
+            } else {
+                variable=0;
+                document.getElementById("automatic").style.backgroundColor = "white";
+                Update_VorwahlPresse();
+            }
+        }
+
+
+        // Hilfs-Funktionen
+        function Update_VorwahlPresse() {
+            vorwahl_1()
+            vorwahl_2()
+            vorwahl_3()
+            vorwahl_4()
+            vorwahl_5()
+            vorwahl_6()
+            vorwahl_7()
+            vorwahl_8()
+        }
+        
+        function Update_CloudVorgabe() {
+            anzeige_1()
+            anzeige_2()
+            anzeige_3()
+            anzeige_4()
+            anzeige_5()
+            anzeige_6()
+            anzeige_7()
+            anzeige_8()
+        }
+
+        function Alle_Werte() {
+            uebernahme_1()
+            uebernahme_2()
+            uebernahme_3()
+            uebernahme_4()
+            uebernahme_5()
+            uebernahme_6()
+            uebernahme_7()
+            uebernahme_8()
+        }
+
+
+        // Vorwahl Presse
+        function vorwahl_1() {
+            if (document.getElementById("vorwah_1").value.length != 0) {
+                Geschwindigkeit1 = document.getElementById("vorwah_1").value;
+                Cloud_Values[0] = Geschwindigkeit1;
+            } else {
+                Cloud_Values[0] = Geschwindigkeit1;
+            }
+            aktuell_1();
+        }
+
+        function vorwahl_2() {
+            if (document.getElementById("vorwah_2").value.length != 0) {
+                Presskraft1 = document.getElementById("vorwah_2").value;
+                Cloud_Values[1] = document.getElementById("vorwah_2").value;
+            } else {
+                Cloud_Values[1] = Presskraft1;
+            }
+            aktuell_2();
+        }
+
+        function vorwahl_3() {
+            if (document.getElementById("vorwah_3").value.length != 0) {
+                Einbauraumverstellung1 = document.getElementById("vorwah_3").value;
+                Cloud_Values[2] = document.getElementById("vorwah_3").value;
+            } else {
+                Cloud_Values[2] = Einbauraumverstellung1;
+            }
+            aktuell_3();
+        }
+
+        function vorwahl_4() {
+            if (document.getElementById("vorwah_4").value.length != 0) {
+                Spruehen1Unten1 = document.getElementById("vorwah_4").value;
+                Cloud_Values[3] = document.getElementById("vorwah_4").value;
+            } else {
+                Cloud_Values[3] = Spruehen1Unten1;
+            }
+            aktuell_4();
+        }
+
+        function vorwahl_5() {
+            if (document.getElementById("vorwah_5").value.length != 0) {
+                Spruehen1Oben1 = document.getElementById("vorwah_5").value;
+                Cloud_Values[4] = document.getElementById("vorwah_5").value;
+            } else {
+                Cloud_Values[4] = Spruehen1Oben1;
+            }
+            aktuell_5();
+        }
+
+        function vorwahl_6() {
+            if (document.getElementById("vorwah_6").value.length != 0) {
+                Spruehen2Unten1 = document.getElementById("vorwah_6").value;
+                Cloud_Values[5] = document.getElementById("vorwah_6").value;
+            } else {
+                Cloud_Values[5] = Spruehen2Unten1;
+            }
+            aktuell_6();
+        }
+
+        function vorwahl_7() {
+            if (document.getElementById("vorwah_7").value.length != 0) {
+                Spruehen2Oben1 = document.getElementById("vorwah_7").value;
+                Cloud_Values[6] = document.getElementById("vorwah_7").value;
+            } else {
+                Cloud_Values[6] = Spruehen2Oben1;
+            }
+            aktuell_7();
+        }
+
+        function vorwahl_8() {
+            if (document.getElementById("vorwah_8").value.length != 0) {
+                TemperaturOfen1 = document.getElementById("vorwah_8").value;
+                Cloud_Values[7] = document.getElementById("vorwah_8").value;
+            } else {
+                Cloud_Values[7] = TemperaturOfen1;
+            }
+            aktuell_8();
+        }
+
+
+        // Aktuelle Stellwerte
+        function aktuell_1() {
+            document.getElementById("aktuell_1").innerHTML = Cloud_Values[0];
+        }
+
+        function aktuell_2() {
+            document.getElementById("aktuell_2").innerHTML = Cloud_Values[1];
+        }
+
+        function aktuell_3() {
+            document.getElementById("aktuell_3").innerHTML = Cloud_Values[2];
+        }
+
+        function aktuell_4() {
+            document.getElementById("aktuell_4").innerHTML = Cloud_Values[3];
+        }
+
+        function aktuell_5() {
+            document.getElementById("aktuell_5").innerHTML = Cloud_Values[4];
+        }
+
+        function aktuell_6() {
+            document.getElementById("aktuell_6").innerHTML = Cloud_Values[5];
+        }
+
+        function aktuell_7() {
+            document.getElementById("aktuell_7").innerHTML = Cloud_Values[6];
+        }
+
+        function aktuell_8() {
+            document.getElementById("aktuell_8").innerHTML = Cloud_Values[7];
+        }
+
+
+        //Cloud Vorgabe 
+        function anzeige_1() {
+            document.getElementById("anzeige_1").innerHTML = Geschwindigkeit2;
+        }
+
+        function anzeige_2() {
+            document.getElementById("anzeige_2").innerHTML = Presskraft2;
+        }
+
+        function anzeige_3() {
+            document.getElementById("anzeige_3").innerHTML = Einbauraumverstellung2;
+        }
+
+        function anzeige_4() {
+            document.getElementById("anzeige_4").innerHTML = Spruehen1Unten2;
+        }
+
+        function anzeige_5() {
+            document.getElementById("anzeige_5").innerHTML = Spruehen1Oben2;
+        }
+
+        function anzeige_6() {
+            document.getElementById("anzeige_6").innerHTML = Spruehen2Unten2;
+        }
+
+        function anzeige_7() {
+            document.getElementById("anzeige_7").innerHTML = Spruehen2Oben2;
+        }
+
+        function anzeige_8() {
+            document.getElementById("anzeige_8").innerHTML = TemperaturOfen2;
+        }
+
+
+        // Werte übernehmen
+        function uebernahme_1() {
+            Cloud_Values[0] = Geschwindigkeit2;
+            aktuell_1();
+        }
+
+        function uebernahme_2() {
+            Cloud_Values[1] = Presskraft2;
+            aktuell_2();
+        }
+
+        function uebernahme_3() {
+            Cloud_Values[2] = Einbauraumverstellung2;
+            aktuell_3();
+        }
+
+        function uebernahme_4() {
+            Cloud_Values[3] = Spruehen1Unten2;
+            aktuell_4();
+        }
+
+        function uebernahme_5() {
+            Cloud_Values[4] = Spruehen1Oben2;
+            aktuell_5();
+        }
+
+        function uebernahme_6() {
+            Cloud_Values[5] = Spruehen2Unten2;
+            aktuell_6();
+        }
+
+        function uebernahme_7() {
+            Cloud_Values[6] = Spruehen2Oben2;
+            aktuell_7();
+        }
+
+        function uebernahme_8() {
+            Cloud_Values[7] = TemperaturOfen2;
+            aktuell_8();
+        }
+
+
+            /*var len = 0;
+    function Get() {
+        ReglerConnect = ReglerConnect + 1;
+        if (ReglerConnect & 1) {
+            document.getElementById("get").style.backgroundColor = "lime";
+            var len_ctrl = 0;
+            while (true) {
+                $.getJSON('/input/', function (result) {
+                    /*$.each(result, function (i, field) {
+                        len=len+1; 
+                    });
+                    len = result.length;
+                    if (len_ctrl < len) { 
+                        len_ctrl=len;
+                        Geschwindigkeit2 = result[len-1].Value1; //JSON.stringify()
+                        Presskraft2 = result[len-1].Value2;
+                        Einbauraumverstellung2 = result[len-1].Value3;
+                        Spruehen1Unten2 = result[len-1].Value4;
+                        Spruehen1Oben2 = result[len-1].Value5;
+                        Spruehen2Unten2 = result[len-1].Value6;
+                        Spruehen2Oben2 = result[len-1].Value7;
+                        TemperaturOfen2 = result[len-1].Value8;
+                        Update_CloudVorgabe();
+                        if (variable == 1) {
+                            Alle_Werte();
+                            //TCP_IP(Cloud_Values); 
+                        }
+                    }
+                });
+                //setTimeout(function(){
+                    // 2 Sekunden Sleep
+                //}, 2000);
+            }
+        } else {
+            document.getElementById("get").style.backgroundColor = "white";
+    }*/
+
+
+                /*var test
+        jQuery.ajax({
+            dataType: "json",
+            url: url,
+            data: data,
+            success: success
+        });
+
+        function test3() {
+            document.getElementById("test").innerHTML = test;
+        }
+
+        jQuery.getJSON('http://localhost:8000/input/', function (data) {
+            test=data[0]; 
+            test3();
+        });
+        
+
+        var test
+        var result
+        function test3() {
+            document.getElementById("test").innerHTML = test;
+        }
+
+        $.getJSON('/input/', function (result1) {
+            result = JSON.stringify(result1)
+            //$.each(result, function (i, field) {
+            //console.log(field)
+            //$("div").append(field + " ");
+            //test = result[0];
+            test = JSON.stringify(result1[1].id);
+            test3();
+        });
+
+        //$.getJSON('/input/', function (result) {
+        //   $.each(result, function (i, field) {
+        //      $("div").append(field + " ");
+        //  });
+        //});
+        */
+
+
+        //$(document).ready(function () {
+        //    $("#anzeige_1").click(function () {
+        //        $.get("/input/", function (data, status) {
+        //            alert("Data: " + data + "\nStatus: " + status);
+        //        });
+        //    });
+        //});
+
+        //$(document).ready(function () {
+        //    $("button2").click(function () {
+        //       alert("Value: " + $("#test").val());
+        //    });
+        //});
+
+        //var valid = myVar.match(/d.d/);
+
+        /*for (i = 0; i < myVar.length; i++) { 
+        var j=0;
+        var res='';
+        for (i = 0; i < 5; i++) { 
+            if (myVar[i] != '[' || myVar[i] != ',') {
+                New[i-j]=myVar[i]
+            } else {
+                j=j+1;
+            }
+        for (i = 0; i < New.length; i++) { 
+            res = res.concat(New[i])*/
+    </script>
+
+    {% endblock %}
+</body>
+</html>
